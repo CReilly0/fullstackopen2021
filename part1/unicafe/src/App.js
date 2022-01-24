@@ -1,5 +1,18 @@
 import React, { useState } from 'react'
 
+// a proper place to define a component
+const Statistics = ({text, value}) => {
+  return(
+    <p>{text} {value}</p>
+  )
+}
+
+const Button = ({text, handleClick}) => {
+  return(
+    <button onClick={handleClick}>{text}</button>
+  )
+}
+
 const App = () => {
   // save clicks of each button to its own state
   const [good, setGood] = useState(0)
@@ -9,7 +22,6 @@ const App = () => {
   const all = good + bad + neutral
   const avg = (good - bad) / all
   const positive = good / all
-
 
   const updateGood = () => {
     setGood(good + 1)
@@ -26,16 +38,16 @@ const App = () => {
   return (
     <div>
       <h1>give feedback</h1>
-      <button onClick={updateGood}> good </button>
-      <button onClick={updateNeutral}> neutral </button>
-      <button onClick={updateBad}> bad </button>
+      <Button handleClick={updateGood} text="good"/>
+      <Button handleClick={updateNeutral} text="neutral"/>
+      <Button handleClick={updateBad} text="bad"/>
       <h1>statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {all}</p>
-      <p>average {avg}</p>
-      <p>positive {positive} %</p>
+      <Statistics text="good" value={good}/>
+      <Statistics text="neutral" value={neutral}/>
+      <Statistics text="bad" value={bad}/>
+      <Statistics text="all" value={all}/>
+      <Statistics text="average" value={avg}/>
+      <Statistics text="positive" value={positive + '%'}/>
     </div>
   )
 }
