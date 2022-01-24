@@ -14,7 +14,7 @@ const Statistics = ({good, neutral, bad}) => {
 
   const all = good + bad + neutral
   const avg = (good - bad) / all
-  const positive = good / all
+  const positive = (good / all) * 100
 
   return(
     <div>
@@ -37,7 +37,7 @@ const Button = ({text, handleClick}) => {
 }
 
 const App = () => {
-  // save clicks of each button to its own state
+
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
@@ -63,7 +63,7 @@ const App = () => {
       <h1>statistics</h1>
       {good || neutral || bad ? 
       <Statistics good={good} neutral={neutral} bad={bad}/>
-      : <p>No feedback given</p> }
+      : <div>No feedback given</div> }
     </div>
   )
 }
