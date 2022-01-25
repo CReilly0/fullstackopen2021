@@ -17,7 +17,12 @@ const App = () => {
     const personObject = {
       name: newName
     }
-    setPersons(persons.concat(personObject))
+    if (JSON.stringify(persons).includes(JSON.stringify(newName))) {
+      window.alert(`${newName} is already added to phonebook`);
+    }
+    else (
+      setPersons(persons.concat(personObject))
+    )
     setNewName("")
   }
 
