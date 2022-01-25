@@ -34,15 +34,15 @@ const Content = ({ course }) => {
 }
 
 const Course = ({courses}) => {
-
     return(
-    courses.map((course) => 
-    <div> 
-      <Header course={course} />
-      <Content course={course} />
-      <Total course={course} />
-    </div>
-    ))
+        courses.map((course) => 
+            <div> 
+                <Header course={course} />
+                <Content course={course} />
+                <Total course={course} />
+            </div>
+        )
+    )
 }
 
 export default Course;
