@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = ({ course }) => {
     return (
-      <h1>{course.name}</h1>
+      <h2>{course.name}</h2>
     )
 }
 
@@ -33,15 +33,16 @@ const Content = ({ course }) => {
     )
 }
 
-const Course = ({course}) => {
+const Course = ({courses}) => {
 
     return(
-    <div>
+    courses.map((course) => 
+    <div> 
       <Header course={course} />
       <Content course={course} />
       <Total course={course} />
     </div>
-    )
+    ))
 }
 
 export default Course;
