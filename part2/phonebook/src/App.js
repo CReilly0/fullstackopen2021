@@ -13,7 +13,6 @@ const App = () => {
   const handleNumberChange = (e) => { setNewNumber(e.target.value) }
   const handleFilterChange = (e) => { setFilter(e.target.value) }
 
-  //If no filter, return persons. If filter, return filtered persons
   const personsToShow = (filter==="")
   ? persons
   : persons.filter((person) => 
