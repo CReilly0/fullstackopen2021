@@ -4,18 +4,24 @@ import Persons from './Components/Persons'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    { name: 'Arto Hellas', number: '040-1234567' }
   ]) 
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
   const handleNameChange = (event) => {
     setNewName(event.target.value)
   }
 
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  }
+
   const addName = (event) => {
     event.preventDefault()
     const personObject = {
-      name: newName
+      name: newName,
+      number: newNumber
     }
     if (JSON.stringify(persons).includes(JSON.stringify(newName))) {
       window.alert(`${newName} is already added to phonebook`);
@@ -29,7 +35,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <PersonForm addName={addName} newName={newName} handleNameChange={handleNameChange}/>
+      <PersonForm 
+        addName={addName} 
+        newName={newName} 
+        handleNameChange={handleNameChange} 
+        newNumber={newNumber} 
+        handleNumberChange={handleNumberChange}/>
       <h2>Numbers</h2>
       <Persons persons={persons} />
     </div>
