@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Countries from './Components/Countries'
+import Country from './Components/Country'
 
 const App = () => {
   const [countries, setCountries] = useState([])
@@ -29,7 +30,7 @@ const App = () => {
       {countriesFilter.length > 10 ? (
         <p>Too many matches, specify another filter</p>
       ) : (
-        <Countries countries={countriesFilter} />
+        <Countries countries={countriesFilter} handleClick={setFilter} />
       )}
     </div>
   )

@@ -1,8 +1,6 @@
 import React from 'react';
 
-const Country = ({ countries }) => {
-
-    const country = countries[0]
+const Country = ({ country }) => {
 
     //Create array from languages object
     const languages = []
@@ -20,7 +18,6 @@ const Country = ({ countries }) => {
         <ul>
             {languages.map(l => <li>{l}</li>)}
         </ul>
-        <h1>{country.name.common}</h1>
         <img src={country.flags.png} alt="Flag"/>
     </div>
   )
