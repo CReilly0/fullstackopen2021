@@ -11,6 +11,21 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
 
+  const handleNameChange = (e) => { setNewName(e.target.value) }
+  const handleNumberChange = (e) => { setNewNumber(e.target.value) }
+  const handleFilterChange = (e) => { setFilter(e.target.value) }
+  
+  const handleDelete = ({ person }) => {
+    const newPersons = persons.filter((p) => p.id !== person.id);
+    const confirmDelete = window.confirm(`Delete ${person.name}?`)
+
+    if (confirmDelete) {
+      phonebookService
+      .remove(person.id, 1)
+      .then(setPersons(newPersons))
+    }
+  }
+
   useEffect(() => {
     phonebookService
       .getAll()
@@ -19,20 +34,7 @@ const App = () => {
       })
   }, [])
 
-  
-  const handleDelete = ({ person }) => {
-    window.confirm(`Delete ${person.name}?`)
-    const newPersons = persons.filter((p) => p.id !== person.id);
-    console.log(newPersons)
-    phonebookService
-    .remove(person.id, 1)
-    .then(setPersons(newPersons))
-  }
-
-  const handleNameChange = (e) => { setNewName(e.target.value) }
-  const handleNumberChange = (e) => { setNewNumber(e.target.value) }
-  const handleFilterChange = (e) => { setFilter(e.target.value) }
-
+  //if filter is empty return full persons list, or return filtered list if filter
   const personsToShow = (filter==="")
   ? persons
   : persons.filter((person) => 
@@ -44,9 +46,21 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    if (JSON.stringify(persons).includes(JSON.stringify(newName))) {
-      window.alert(`${newName} is already added to phonebook`);
+    //If the name already exists, check if user wants to edit number
+    if(JSON.stringify(persons).includes(JSON.stringify(newName))) {
+      const result = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`);
+      const oldPerson = persons.find((p) => p.name === newName)
+      const newPerson = { ...oldPerson, number: newNumber}
+      if (result) {
+        phonebookService
+        .update(oldPerson.id, newPerson)
+        .then(resultPerson => {
+          setPersons(persons.map(p => p.id !== oldPerson.id ? p : resultPerson))
+        }
+        )
+      }
     }
+    //else add new person
     else (
       phonebookService
       .create(personObject)
@@ -54,6 +68,7 @@ const App = () => {
         setPersons(persons.concat(personObject))
       })
     )
+    //reset forms 
     setNewName("")
     setNewNumber("")
   }
