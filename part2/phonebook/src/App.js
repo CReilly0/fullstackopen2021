@@ -12,6 +12,7 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filter, setFilter] = useState('')
   const [notification, setNotification] = useState(null)
+  const [notificationType, setNotificationType] = useState("success")
 
   const handleNameChange = (e) => { setNewName(e.target.value) }
   const handleNumberChange = (e) => { setNewNumber(e.target.value) }
@@ -62,8 +63,16 @@ const App = () => {
           setTimeout(() => {
           setNotification(null)
           }, 5000);
-        }
-        )
+        })
+        .catch(error => {
+          setNotificationType("error");
+          setNotification(`Information of ${oldPerson.name} has already been removed from server`)
+          setTimeout(() => {
+            setNotification(null)
+            setNotificationType("success");
+          }, 5000);
+          setPersons(persons.filter(p => p.id !== newName.id));
+        })
       }
     }
     //else add new person
@@ -85,7 +94,7 @@ const App = () => {
   return (
     <div>
       <h3>Phonebook</h3>
-      <Notification message={notification} />
+      <Notification message={notification} type={notificationType} />
       <Filter handleFilterChange={handleFilterChange} />
       <h3>Add a new</h3>
       <PersonForm 
